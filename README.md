@@ -21,3 +21,10 @@ Most text editors expand tabs using tab stops at fixed column intervals, but man
 Contraction is not uniquely defined: the same expanded text can come from different tab/space combinations. This library defines contraction as replacing the longest possible run of leading spaces that ends exactly at a tab stop, working left to right. For example, seven leading spaces with tab width 4 become a tab followed by three spaces. A run of three leading spaces remains as spaces because it cannot reach the next tab stop.
 
 Only leading whitespace on each line is contracted. Tabs that already exist are left untouched.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
